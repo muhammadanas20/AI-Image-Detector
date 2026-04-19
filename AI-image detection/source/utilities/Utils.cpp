@@ -1,5 +1,5 @@
+#include "utilities/Utils.h"
 #include <iostream>
-#include <string>
 #include <iomanip>
 using namespace std;
 
@@ -23,7 +23,7 @@ void printStatus(string status, bool success) {
 }
 
 // Utility function to pause execution
-void pauseExecution(string message = "Press Enter to continue...") {
+void pauseExecution(string message) {
     cout << "\n" << message << endl;
     cin.ignore();
     cin.get();

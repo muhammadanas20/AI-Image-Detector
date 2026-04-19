@@ -2,7 +2,7 @@
 #ifndef ARTIFACTANALYZER_H
 #define ARTIFACTANALYZER_H
 
-#include "Analyzer.h"
+#include "core/Analyzer.h"
 
 class ArtifactAnalyzer : public Analyzer {
 private:

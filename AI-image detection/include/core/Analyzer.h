@@ -1,9 +1,9 @@
 #ifndef ANALYZER_H
 #define ANALYZER_H
 
-#include "Image.h"
-#include "AnalysisResult.h"
-#include "ILoggable.h"
+#include "core/Image.h"
+#include "results/AnalysisResult.h"
+#include "core/ILoggable.h"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -18,7 +18,7 @@ public:
     Analyzer();
     virtual ~Analyzer();
     
-    // Pure virtual function - must be implemented by derived classes
+    // Pure virtual function 
     virtual AnalysisResult analyze(Image& img) = 0;
     
     // Getters

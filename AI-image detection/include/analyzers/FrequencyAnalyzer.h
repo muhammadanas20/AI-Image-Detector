@@ -1,7 +1,7 @@
 #ifndef FREQUENCYANALYZER_H
 #define FREQUENCYANALYZER_H
 
-#include "Analyzer.h"
+#include "core/Analyzer.h"
 #include <vector>
 using namespace std;
 

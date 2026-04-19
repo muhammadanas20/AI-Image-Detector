@@ -1,4 +1,4 @@
-#include "AnalysisResult.h"
+#include "results/AnalysisResult.h"
 #include <ctime>
 #include <iomanip>
 

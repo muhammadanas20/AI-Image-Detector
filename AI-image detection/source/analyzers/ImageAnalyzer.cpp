@@ -1,4 +1,4 @@
-#include "ImageAnalyzer.h"
+#include "analyzers/ImageAnalyzer.h"
 #include <iostream>
 #include <iomanip>
 
@@ -33,8 +33,10 @@ FinalResult ImageAnalyzer::running(Image& img) {
     currentResult = FinalResult();
     
     // Run each analyzer
+    int analyzerNum = 0;
     for (Analyzer* analyzer : analyzers) {
-        logActivity("\nRunning: " + string(typeid(*analyzer).name()));
+        analyzerNum++;
+        logActivity("\n[Analyzer " + to_string(analyzerNum) + "/" + to_string(analyzers.size()) + "]");
         
         AnalysisResult result = analyzer->analyze(img);
         currentResult.addAnalysisResult(result);

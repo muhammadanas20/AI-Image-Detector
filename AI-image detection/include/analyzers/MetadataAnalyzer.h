@@ -1,7 +1,7 @@
 #ifndef METADATAANALYZER_H
 #define METADATAANALYZER_H
 
-#include "Analyzer.h"
+#include "core/Analyzer.h"
 #include <string>
 using namespace std;
 

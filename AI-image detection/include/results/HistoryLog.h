@@ -1,7 +1,7 @@
 #ifndef HISTORYLOG_H
 #define HISTORYLOG_H
 
-#include "AnalysisResult.h"
+#include "results/AnalysisResult.h"
 #include <vector>
 #include <string>
 #include <iostream>

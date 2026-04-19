@@ -1,4 +1,4 @@
-#include "ArtifactAnalyzer.h"
+#include "analyzers/ArtifactAnalyzer.h"
 #include <cstdlib>
 #include <cmath>
 

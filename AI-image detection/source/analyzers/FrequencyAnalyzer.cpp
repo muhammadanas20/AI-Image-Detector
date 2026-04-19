@@ -1,4 +1,4 @@
-#include "FrequencyAnalyzer.h"
+#include "analyzers/FrequencyAnalyzer.h"
 #include <cstdlib>
 #include <cmath>
 

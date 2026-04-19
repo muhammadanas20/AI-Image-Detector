@@ -1,4 +1,4 @@
-#include "HistoryLog.h"
+#include "results/HistoryLog.h"
 #include <fstream>
 #include <algorithm>
 #include <ctime>

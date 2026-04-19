@@ -1,7 +1,7 @@
 #ifndef FINALRESULT_H
 #define FINALRESULT_H
 
-#include "AnalysisResult.h"
+#include "results/AnalysisResult.h"
 #include <vector>
 #include <iostream>
 using namespace std;

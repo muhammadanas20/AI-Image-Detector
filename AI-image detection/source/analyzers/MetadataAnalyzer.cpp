@@ -1,4 +1,4 @@
-#include "MetadataAnalyzer.h"
+#include "analyzers/MetadataAnalyzer.h"
 #include <cstdlib>
 #include <cmath>
 

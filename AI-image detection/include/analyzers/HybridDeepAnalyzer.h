@@ -1,10 +1,10 @@
 #ifndef HYBRIDDEEPANALYZER_H
 #define HYBRIDDEEPANALYZER_H
 
-#include "Analyzer.h"
-#include "MetadataAnalyzer.h"
-#include "ArtifactAnalyzer.h"
-#include "FrequencyAnalyzer.h"
+#include "core/Analyzer.h"
+#include "analyzers/MetadataAnalyzer.h"
+#include "analyzers/ArtifactAnalyzer.h"
+#include "analyzers/FrequencyAnalyzer.h"
 
 class HybridDeepAnalyzer : public Analyzer {
 private:

@@ -1,4 +1,4 @@
-#include "HybridDeepAnalyzer.h"
+#include "analyzers/HybridDeepAnalyzer.h"
 #include <cstdlib>
 
 HybridDeepAnalyzer::HybridDeepAnalyzer() {

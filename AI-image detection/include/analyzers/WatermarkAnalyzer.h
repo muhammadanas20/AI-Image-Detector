@@ -1,7 +1,7 @@
 #ifndef WATERMARKANALYZER_H
 #define WATERMARKANALYZER_H
 
-#include "Analyzer.h"
+#include "core/Analyzer.h"
 
 class WatermarkAnalyzer : public Analyzer {
 private:

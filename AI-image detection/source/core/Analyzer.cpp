@@ -1,4 +1,4 @@
-#include "Analyzer.h"
+#include "core/Analyzer.h"
 #include <iostream>
 using namespace std;
 

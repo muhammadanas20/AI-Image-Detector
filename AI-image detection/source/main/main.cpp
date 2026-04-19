@@ -1,24 +1,13 @@
-#include "ImageAnalyzer.h"
-#include "MetadataAnalyzer.h"
-#include "ArtifactAnalyzer.h"
-#include "FrequencyAnalyzer.h"
-#include "WatermarkAnalyzer.h"
-#include "HybridDeepAnalyzer.h"
+#include "analyzers/ImageAnalyzer.h"
+#include "analyzers/MetadataAnalyzer.h"
+#include "analyzers/ArtifactAnalyzer.h"
+#include "analyzers/FrequencyAnalyzer.h"
+#include "analyzers/WatermarkAnalyzer.h"
+#include "analyzers/HybridDeepAnalyzer.h"
+#include "utilities/Utils.h"
 #include <iostream>
 #include <iomanip>
 using namespace std;
-
-void printHeader(string title) {
-    cout << "\n" << string(70, '=') << endl;
-    cout << "  " << title << endl;
-    cout << string(70, '=') << endl;
-}
-
-void printSection(string title) {
-    cout << "\n" << string(50, '-') << endl;
-    cout << "  " << title << endl;
-    cout << string(50, '-') << endl;
-}
 
 int main() {
     printHeader("AI IMAGE DETECTION SYSTEM");
@@ -116,38 +105,6 @@ int main() {
     
     imageAnalyzer.displayAllAnalyzers();
 
-    // ==================== SYSTEM SUMMARY ====================
-    printSection("HOW THE SYSTEM WORKS");
-    
-    cout << "\n1. IMAGE LOADING PHASE:" << endl;
-    cout << "   • Image file is loaded and analyzed" << endl;
-    cout << "   • Dimensions, format, and size are extracted" << endl;
-    cout << "   • Raw pixel data is simulated for analysis" << endl;
-    
-    cout << "\n2. MULTI-ANALYZER PIPELINE:" << endl;
-    cout << "   • MetadataAnalyzer: Checks EXIF data, source verification" << endl;
-    cout << "   • ArtifactAnalyzer: Detects compression artifacts and noise" << endl;
-    cout << "   • FrequencyAnalyzer: Performs FFT to analyze frequency patterns" << endl;
-    cout << "   • WatermarkAnalyzer: Searches for watermark signatures" << endl;
-    cout << "   • HybridDeepAnalyzer: Combines all methods + neural simulation" << endl;
-    
-    cout << "\n3. SCORING SYSTEM:" << endl;
-    cout << "   • Each analyzer produces a score (0.0 = Real, 1.0 = AI)" << endl;
-    cout << "   • Scores based on different detection methods:" << endl;
-    cout << "     - Missing/invalid EXIF (+0.4)" << endl;
-    cout << "     - Unverified source (+0.3)" << endl;
-    cout << "     - Jagged edges and artifacts (+0.2-0.4)" << endl;
-    cout << "     - Unnatural frequency patterns (+0.3)" << endl;
-    
-    cout << "\n4. FINAL VERDICT:" << endl;
-    cout << "   • Confidence = Average of all analyzer scores" << endl;
-    cout << "   • If confidence > 0.5 → AI GENERATED" << endl;
-    cout << "   • If confidence ≤ 0.5 → AUTHENTIC (likely real)" << endl;
-    
-    cout << "\n5. LOGGING & REPORTING:" << endl;
-    cout << "   • All activities logged in HistoryLog" << endl;
-    cout << "   • Detailed reports saved to files" << endl;
-    cout << "   • Comparative analysis across multiple images" << endl;
 
     // ==================== DEMONSTRATION COMPLETE ====================
     printHeader("ANALYSIS COMPLETE");

@@ -1,10 +1,10 @@
 #ifndef IMAGEANALYZER_H
 #define IMAGEANALYZER_H
 
-#include "Analyzer.h"
-#include "FinalResult.h"
-#include "HistoryLog.h"
-#include "Image.h"
+#include "core/Analyzer.h"
+#include "results/FinalResult.h"
+#include "results/HistoryLog.h"
+#include "core/Image.h"
 #include <vector>
 #include <memory>
 

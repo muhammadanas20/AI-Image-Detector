@@ -1,4 +1,4 @@
-#include "WatermarkAnalyzer.h"
+#include "analyzers/WatermarkAnalyzer.h"
 #include <cstdlib>
 
 WatermarkAnalyzer::WatermarkAnalyzer() : hasWatermark(false), watermarkType("None") {
