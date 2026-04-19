@@ -20,27 +20,27 @@ void initializeSystem() {
         
         // Create main analyzer controller
         g_imageAnalyzer = new ImageAnalyzer();
-        cout << "✓ ImageAnalyzer controller created\n" << endl;
+        cout << "ImageAnalyzer controller created\n" << endl;
         
         // Add individual analyzers
         cout << "Loading analyzers...\n" << endl;
         
         g_imageAnalyzer->addAnalyzer(new MetadataAnalyzer());
-        cout << "  ✓ MetadataAnalyzer loaded\n";
+        cout << "MetadataAnalyzer loaded\n";
         
         g_imageAnalyzer->addAnalyzer(new ArtifactAnalyzer());
-        cout << "  ✓ ArtifactAnalyzer loaded\n";
+        cout << "ArtifactAnalyzer loaded\n";
         
         g_imageAnalyzer->addAnalyzer(new FrequencyAnalyzer());
-        cout << "  ✓ FrequencyAnalyzer loaded\n";
+        cout << "FrequencyAnalyzer loaded\n";
         
         g_imageAnalyzer->addAnalyzer(new WatermarkAnalyzer());
-        cout << "  ✓ WatermarkAnalyzer loaded\n";
+        cout << "WatermarkAnalyzer loaded\n";
         
         g_imageAnalyzer->addAnalyzer(new HybridDeepAnalyzer());
-        cout << "  ✓ HybridDeepAnalyzer loaded\n" << endl;
+        cout << "HybridDeepAnalyzer loaded\n" << endl;
         
-        cout << "✓ System initialized successfully with " << Analyzer::getCount() << " analyzers\n" << endl;
+        cout << "System initialized successfully with " << Analyzer::getCount() << " analyzers\n" << endl;
         pauseExecution("Press Enter to continue to main menu...");
     }
     catch (const AIDetectorException& e) {
@@ -60,7 +60,7 @@ void cleanupSystem() {
         if (g_imageAnalyzer != nullptr) {
             delete g_imageAnalyzer;
             g_imageAnalyzer = nullptr;
-            cout << "\n✓ System cleanup complete\n" << endl;
+            cout << "\nSystem cleanup complete\n" << endl;
         }
     }
     catch (const exception& e) {
@@ -73,7 +73,6 @@ int main() {
         // Initialize system
         initializeSystem();
         
-        // Create and run menu system
         MenuSystem menu;
         menu.run();
         
