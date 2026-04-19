@@ -1,4 +1,5 @@
 #include "core/Analyzer.h"
+#include "utilities/CustomExceptions.h"
 #include <iostream>
 using namespace std;
 
@@ -6,7 +7,12 @@ using namespace std;
 int Analyzer::analyzerCount = 0;
 
 Analyzer::Analyzer() {
-    analyzerID = analyzerCount++;
+    try {
+        analyzerID = analyzerCount++;
+    }
+    catch (const exception& e) {
+        throw AnalysisException("Failed to initialize analyzer: " + string(e.what()));
+    }
 }
 
 Analyzer::~Analyzer() {
@@ -14,9 +20,19 @@ Analyzer::~Analyzer() {
 }
 
 void Analyzer::logActivity(string msg) {
-    cout << "[Analyzer " << analyzerID << "] " << msg << endl;
+    try {
+        cout << "[Analyzer " << analyzerID << "] " << msg << endl;
+    }
+    catch (const exception& e) {
+        cerr << "ERROR logging activity: " << e.what() << endl;
+    }
 }
 
 void Analyzer::displayAnalyzerInfo() const {
-    cout << "Analyzer ID: " << analyzerID << " | Total Analyzers: " << analyzerCount << endl;
+    try {
+        cout << "Analyzer ID: " << analyzerID << " | Total Analyzers: " << analyzerCount << endl;
+    }
+    catch (const exception& e) {
+        cerr << "ERROR displaying analyzer info: " << e.what() << endl;
+    }
 }

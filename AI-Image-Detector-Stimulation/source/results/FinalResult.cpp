@@ -1,7 +1,10 @@
 #include "results/FinalResult.h"
+#include "utilities/CustomExceptions.h"
+#include "utilities/Utils.h"
 #include <fstream>
 #include <iomanip>
 #include <algorithm>
+#include <iostream>
 
 FinalResult::FinalResult() : confidence(0.0), isAIGenerated(false) {
 }
@@ -11,24 +14,40 @@ FinalResult::~FinalResult() {
 }
 
 void FinalResult::addAnalysisResult(const AnalysisResult& result) {
-    results.push_back(result);
+    try {
+        results.push_back(result);
+    }
+    catch (const exception& e) {
+        throw AnalysisException("Failed to add analysis result: " + string(e.what()));
+    }
 }
 
 void FinalResult::calcFinalScore() {
-    if (results.empty()) {
-        confidence = 0.0;
-        return;
+    try {
+        if (results.empty()) {
+            confidence = 0.0;
+            return;
+        }
+        
+        // Calculate average confidence from all analyzers
+        double sum = 0.0;
+        for (const auto& result : results) {
+            sum += result.getScore();
+        }
+        confidence = sum / results.size();
+        
+        // Validate confidence score
+        if (!isValidScore(confidence)) {
+            throw InvalidScoreException(confidence);
+        }
+        
+        // Determine if AI generated based on threshold
+        isAIGenerated = (confidence > 0.5);
     }
-    
-    // Calculate average confidence from all analyzers
-    double sum = 0.0;
-    for (const auto& result : results) {
-        sum += result.getScore();
+    catch (const AIDetectorException& e) {
+        cerr << "ERROR calculating final score: " << e.what() << endl;
+        throw;
     }
-    confidence = sum / results.size();
-    
-    // Determine if AI generated based on threshold
-    isAIGenerated = (confidence > 0.5);
 }
 
 void FinalResult::displayFullReport() const {
@@ -53,36 +72,62 @@ void FinalResult::displayFullReport() const {
 }
 
 void FinalResult::saveToFile(string filename) {
-    ofstream outFile(filename);
-    
-    if (!outFile.is_open()) {
-        cout << "Error: Could not open file " << filename << endl;
-        return;
+    try {
+        ofstream outFile(filename);
+        
+        if (!outFile.is_open()) {
+            throw FileException("Could not open file for writing: " + filename);
+        }
+        
+        outFile << "=== AI IMAGE DETECTION REPORT ===" << endl;
+        outFile << "Generated at: " << __DATE__ << " " << __TIME__ << endl;
+        outFile << "\nFinal Verdict: " << (isAIGenerated ? "AI GENERATED" : "AUTHENTIC") << endl;
+        outFile << "Confidence: " << fixed << setprecision(2) << confidence << endl;
+        outFile << "\n--- Analyzer Results ---" << endl;
+        
+        for (const auto& result : results) {
+            outFile << "\nAnalyzer: " << result.getAnalyzerName() << endl;
+            outFile << "Score: " << fixed << setprecision(2) << result.getScore() << endl;
+            outFile << "Reason: " << result.getReason() << endl;
+            outFile << "Time: " << result.getTimestamp() << endl;
+        }
+        
+        outFile.close();
+        cout << "Report saved to: " << filename << endl;
     }
-    
-    outFile << "=== AI IMAGE DETECTION REPORT ===" << endl;
-    outFile << "Generated at: " << __DATE__ << " " << __TIME__ << endl;
-    outFile << "\nFinal Verdict: " << (isAIGenerated ? "AI GENERATED" : "AUTHENTIC") << endl;
-    outFile << "Confidence: " << confidence << endl;
-    outFile << "\n--- Analyzer Results ---" << endl;
-    
-    for (const auto& result : results) {
-        outFile << "\nAnalyzer: " << result.getAnalyzerName() << endl;
-        outFile << "Score: " << result.getScore() << endl;
-        outFile << "Reason: " << result.getReason() << endl;
-        outFile << "Time: " << result.getTimestamp() << endl;
+    catch (const AIDetectorException& e) {
+        cerr << "ERROR saving report: " << e.what() << endl;
+        throw;
     }
-    
-    outFile.close();
-    cout << "Report saved to: " << filename << endl;
+    catch (const exception& e) {
+        throw FileException("Unexpected error while saving file: " + string(e.what()));
+    }
 }
 
 AnalysisResult& FinalResult::operator[](int index) {
-    return results[index];
+    try {
+        if (index < 0 || index >= static_cast<int>(results.size())) {
+            throw InputValidationException("Analysis result index out of bounds: " + to_string(index));
+        }
+        return results[index];
+    }
+    catch (const AIDetectorException& e) {
+        cerr << "ERROR accessing result: " << e.what() << endl;
+        throw;
+    }
 }
 
 const AnalysisResult& FinalResult::operator[](int index) const {
-    return results[index];
+    try {
+        if (index < 0 || index >= static_cast<int>(results.size())) {
+            throw InputValidationException("Analysis result index out of bounds: " + to_string(index));
+        }
+        return results[index];
+    }
+    catch (const AIDetectorException& e) {
+        cerr << "ERROR accessing result: " << e.what() << endl;
+        throw;
+    }
 }
 
 FinalResult& FinalResult::operator++() {

@@ -1,4 +1,6 @@
 #include "core/Image.h"
+#include "utilities/CustomExceptions.h"
+#include "utilities/Utils.h"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -24,10 +26,19 @@ void Image::setFilePath(string path) {
 }
 
 void Image::setDimensions(int w, int h) {
-    width = w;
-    height = h;
-    if (w > 0 && h > 0) {
-        rawData.resize(w * h, 0);
+    try {
+        if (w <= 0 || h <= 0) {
+            throw ImageDimensionException(w, h);
+        }
+        width = w;
+        height = h;
+        if (w > 0 && h > 0) {
+            rawData.resize(w * h, 0);
+        }
+    }
+    catch (const AIDetectorException& e) {
+        cerr << "ERROR: " << e.what() << endl;
+        throw;
     }
 }
 
@@ -41,10 +52,16 @@ void Image::setFileFormat(string format) {
 
 // Pixel access operator
 char Image::operator[](int index) const {
-    if (index >= 0 && index < static_cast<int>(rawData.size())) {
+    try {
+        if (index < 0 || index >= static_cast<int>(rawData.size())) {
+            throw InvalidImageException("Pixel index out of bounds: " + to_string(index));
+        }
         return rawData[index];
     }
-    return 0;
+    catch (const AIDetectorException& e) {
+        cerr << "ERROR: " << e.what() << endl;
+        return 0;
+    }
 }
 
 // Display image info
@@ -59,28 +76,47 @@ void Image::displayImageInfo() const {
 
 // Load image (simulated)
 bool Image::loadImage(string path) {
-    filePath = path;
-    
-    // Extract format from path
-    size_t dotPos = path.find_last_of('.');
-    if (dotPos != string::npos) {
-        fileFormat = path.substr(dotPos + 1);
+    try {
+        filePath = path;
+        
+        // Extract format from path
+        size_t dotPos = path.find_last_of('.');
+        if (dotPos != string::npos) {
+            fileFormat = path.substr(dotPos + 1);
+            
+            // Validate image format
+            if (!isValidImageFormat(fileFormat)) {
+                throw InvalidFileFormatException(fileFormat);
+            }
+        }
+        else {
+            throw InvalidFileFormatException("No file extension found");
+        }
+        
+        // Simulate loading image
+        width = 1920 + (rand() % 1000);    // Random width between 1920-2920
+        height = 1080 + (rand() % 1000);   // Random height between 1080-2080
+        
+        // Validate dimensions
+        if (width <= 0 || height <= 0) {
+            throw ImageDimensionException(width, height);
+        }
+        
+        // Create simulated raw data
+        int fileSize = width * height;
+        rawData.resize(fileSize);
+        
+        // Fill with simulated pixel data
+        for (int i = 0; i < fileSize; i++) {
+            rawData[i] = static_cast<char>(rand() % 256);
+        }
+        
+        return true;
     }
-    
-    // Simulate loading image
-    width = 1920 + (rand() % 1000);    // Random width between 1920-2920
-    height = 1080 + (rand() % 1000);   // Random height between 1080-2080
-    
-    // Create simulated raw data
-    int fileSize = width * height;
-    rawData.resize(fileSize);
-    
-    // Fill with simulated pixel data
-    for (int i = 0; i < fileSize; i++) {
-        rawData[i] = static_cast<char>(rand() % 256);
+    catch (const AIDetectorException& e) {
+        cerr << "ERROR loading image: " << e.what() << endl;
+        return false;
     }
-    
-    return true;
 }
 
 // Stream output operator
