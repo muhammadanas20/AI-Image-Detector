@@ -355,25 +355,14 @@ Each analyzer contributes ~20% to final confidence:
 
 ### Compile
 ```bash
-g++ -std=c++17 -o ai_detector \
-    src/main.cpp \
-    src/Image.cpp \
-    src/Analyzer.cpp \
-    src/AnalysisResult.cpp \
-    src/MetadataAnalyzer.cpp \
-    src/ArtifactAnalyzer.cpp \
-    src/FrequencyAnalyzer.cpp \
-    src/WatermarkAnalyzer.cpp \
-    src/HybridDeepAnalyzer.cpp \
-    src/ImageAnalyzer.cpp \
-    src/HistoryLog.cpp \
-    src/FinalResult.cpp \
-    src/Utils.cpp
+g++ -I./include source/main/main.cpp source/core/Analyzer.cpp source/core/Image.cpp source/analyzers/*.cpp source/results/*.cpp source/utilities/*.cpp -o bin/AIDetector.exe
+
 ```
 
 ### Run
 ```bash
-./ai_detector
+cd bin
+./AIDetector.exe
 ```
 
 ## 📋 OOP Concepts Implemented
