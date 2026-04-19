@@ -18,6 +18,9 @@ void printStatus(string status, bool success);
 // Utility function to pause execution
 void pauseExecution(string message = "Press Enter to continue...");
 
+// Utility function to clear screen
+void clearScreen();
+
 // Utility function to format percentage
 string formatPercentage(double value);
 

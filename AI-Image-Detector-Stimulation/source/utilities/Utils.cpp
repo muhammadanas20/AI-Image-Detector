@@ -5,6 +5,7 @@
 #include <fstream>
 #include <algorithm>
 #include <cctype>
+#include <cstdlib>
 using namespace std;
 
 // Utility function to print header
@@ -31,6 +32,15 @@ void pauseExecution(string message) {
     cout << "\n" << message << endl;
     cin.ignore();
     cin.get();
+}
+
+// Utility function to clear screen
+void clearScreen() {
+    #ifdef _WIN32
+        system("cls");  // Windows
+    #else
+        system("clear");  // Linux/Mac
+    #endif
 }
 
 // Utility function to format percentage

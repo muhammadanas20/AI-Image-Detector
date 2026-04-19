@@ -53,6 +53,9 @@ public:
     // Update existing image analysis
     bool updateImage(const string& imageID, const Image& newImage);
     
+    // Save analysis result to database
+    bool saveAnalysisResult(const string& imageID, const FinalResult& result);
+    
     // Delete image from database
     bool deleteImage(const string& imageID);
     

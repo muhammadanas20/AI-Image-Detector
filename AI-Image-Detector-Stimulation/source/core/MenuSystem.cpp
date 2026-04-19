@@ -94,6 +94,7 @@ int MenuSystem::getReportsMenuChoice() {
 
 void MenuSystem::run() {
     while (isRunning) {
+        clearScreen();
         displayMainMenu();
         int choice = getMainMenuChoice();
         handleMainMenu(choice);
@@ -107,6 +108,7 @@ void MenuSystem::handleMainMenu(int choice) {
         case 1:
             // Image Analysis
             while (true) {
+                clearScreen();
                 displayAnalysisMenu();
                 int subChoice = getAnalysisMenuChoice();
                 handleAnalysisMenu(subChoice);
@@ -117,6 +119,7 @@ void MenuSystem::handleMainMenu(int choice) {
         case 2:
             // Database Management
             while (true) {
+                clearScreen();
                 displayDataManagementMenu();
                 int subChoice = getDataManagementMenuChoice();
                 handleDataManagementMenu(subChoice);
@@ -127,6 +130,7 @@ void MenuSystem::handleMainMenu(int choice) {
         case 3:
             // Search & Filter
             while (true) {
+                clearScreen();
                 displaySearchMenu();
                 int subChoice = getSearchMenuChoice();
                 handleSearchMenu(subChoice);
@@ -137,6 +141,7 @@ void MenuSystem::handleMainMenu(int choice) {
         case 4:
             // Reports
             while (true) {
+                clearScreen();
                 displayReportsMenu();
                 int subChoice = getReportsMenuChoice();
                 handleReportsMenu(subChoice);
@@ -167,7 +172,7 @@ void MenuSystem::handleAnalysisMenu(int choice) {
                 printSection("ADD IMAGE TO DATABASE");
                 string filePath = getValidFilePath("\nEnter image file path: ");
                 string imageID = g_imageAnalyzer->addImage(filePath);
-                cout << "\n✓ Image added successfully!\n";
+                cout << "\n[SUCCESS] Image added successfully!\n";
                 cout << "Image ID: " << imageID << "\n" << endl;
                 pauseExecution();
                 break;
@@ -190,9 +195,10 @@ void MenuSystem::handleAnalysisMenu(int choice) {
                     FinalResult result = g_imageAnalyzer->running(imageData.image);
                     result.displayFullReport();
                     
-                    // Update database with analysis results
-                    g_imageAnalyzer->updateImage(imageID, imageData.image);
+                    // Save analysis results to database
+                    g_imageAnalyzer->saveAnalysisResult(imageID, result);
                     
+                    cout << "\n[SUCCESS] Analysis results saved to database!\n" << endl;
                     pauseExecution();
                 }
                 catch (const exception& e) {
@@ -245,7 +251,7 @@ void MenuSystem::handleAnalysisMenu(int choice) {
                         FinalResult result = g_imageAnalyzer->running(img);
                     }
                     
-                    cout << "\n✓ Analysis complete for all unanalyzed images!\n" << endl;
+                    cout << "\n[SUCCESS] Analysis complete for all unanalyzed images!\n" << endl;
                 }
                 
                 pauseExecution();
@@ -331,7 +337,7 @@ void MenuSystem::handleDataManagementMenu(int choice) {
                 Image newImage;
                 if (newImage.loadImage(newPath)) {
                     if (g_imageAnalyzer->updateImage(imageID, newImage)) {
-                        cout << "\n✓ Image updated successfully!\n" << endl;
+                        cout << "\n[SUCCESS] Image updated successfully!\n" << endl;
                     }
                 }
                 
@@ -351,7 +357,7 @@ void MenuSystem::handleDataManagementMenu(int choice) {
                 
                 if (getConfirmation("Are you sure you want to delete this image?")) {
                     if (g_imageAnalyzer->deleteImage(imageID)) {
-                        cout << "\n✓ Image deleted successfully!\n" << endl;
+                        cout << "\n[SUCCESS] Image deleted successfully!\n" << endl;
                     }
                 }
                 
@@ -500,7 +506,7 @@ void MenuSystem::handleReportsMenu(int choice) {
                 
                 if (!filename.empty()) {
                     g_imageAnalyzer->saveAllResultsToFile(filename);
-                    cout << "\n✓ Results saved successfully!\n" << endl;
+                    cout << "\n[SUCCESS] Results saved successfully!\n" << endl;
                 }
                 
                 pauseExecution();

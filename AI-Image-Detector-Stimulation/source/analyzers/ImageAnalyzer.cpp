@@ -171,6 +171,34 @@ bool ImageAnalyzer::updateImage(const string& imageID, const Image& newImage) {
     }
 }
 
+bool ImageAnalyzer::saveAnalysisResult(const string& imageID, const FinalResult& result) {
+    try {
+        ImageData* imageData = findImageByID(imageID);
+        if (!imageData) {
+            throw ImageNotFound(imageID);
+        }
+        
+        // Update analysis result
+        imageData->analysisResult = result;
+        imageData->isAnalyzed = true;
+        
+        // Update timestamp
+        time_t now = time(0);
+        char buffer[100];
+        strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", localtime(&now));
+        imageData->timestamp = string(buffer);
+        
+        logActivity("Analysis result saved for: " + imageID + 
+                   " | Verdict: " + (result.getIsAIGenerated() ? "AI GENERATED" : "AUTHENTIC") +
+                   " | Confidence: " + to_string(result.getConfidence()));
+        return true;
+    }
+    catch (const AIDetectorException& e) {
+        logActivity("ERROR saving analysis result: " + string(e.what()));
+        throw;
+    }
+}
+
 bool ImageAnalyzer::deleteImage(const string& imageID) {
     try {
         int index = findImageIndexByID(imageID);
